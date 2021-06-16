@@ -6,17 +6,18 @@
         xmlns:local="clr-namespace:wpfChallenge"
         xmlns:vm="clr-namespace:wpfChallenge.ViewModels"
         mc:Ignorable="d"
-        Title="LCR Game Simulator" Height="500" Width="500" FontSize="14">
+        Title="LCR Game Simulator" Height="700" Width="500" FontSize="14">
     <Window.DataContext>
         <vm:LCRSimulatorViewModel/>
     </Window.DataContext>
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="101*"/>
-            <RowDefinition Height="46*"/>
-            <RowDefinition Height="156*"/>
-            <RowDefinition Height="101*"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition />
+            <RowDefinition Height="10"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -28,6 +29,7 @@
 
         <TextBlock Text="LCR Game Simulator" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="DemiBold" Height="21" Margin="42,7,41.5,7" Width="148"/>
 
+        <!-- Settings -->
         <GroupBox Grid.Row="1" Header="Game Settings" Grid.ColumnSpan="4">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
@@ -52,6 +54,13 @@
         </GroupBox>
 
         <Button Content="Start Game!" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Height="32"/>
+        
+        <!--Statistics-->
+        <GroupBox Header="Statistics" Grid.Row="3" Grid.ColumnSpan="4">
+            
+        </GroupBox>
+        
+        <!--Output-->
 
     </Grid>
 </Window>

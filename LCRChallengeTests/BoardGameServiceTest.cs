@@ -13,7 +13,7 @@ namespace LCRChallengeTests
 
             var newGame = service.CreateNewLCRGame(3);
 
-            service.RunGame(newGame);
+            //service.RunGame(newGame);
 
             Assert.IsNotNull(newGame);
         }
