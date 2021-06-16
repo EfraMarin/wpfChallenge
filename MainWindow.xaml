@@ -15,7 +15,7 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="90"/>
             <RowDefinition Height="45"/>
-            <RowDefinition />
+            <RowDefinition Height="180" />
             <RowDefinition Height="10"/>
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -54,15 +54,17 @@
         </GroupBox>
 
         <Button Content="Start Game!" Command="{Binding StartGamesCommand}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Height="32"/>
-        
+
         <!--Statistics (row 3)-->
         <GroupBox Header="Statistics" Grid.Row="3" Grid.ColumnSpan="4">
             
         </GroupBox>
-        
+
         <!--Output-->
-        <TextBlock Grid.Row="5" Text="Output:" Height="32"/>
-        <TextBox Grid.Row="5" Grid.ColumnSpan="4" VerticalScrollBarVisibility="Auto" Text="he simplest concrete ViewModelBase subclass is CommandViewModel. It exposes a property called Command of type ICommand. MainWindowViewModel exposes a collection of theseobjects through its Commands property. The navigation area on theleft-hand side of the main window displays a link for each CommandViewModel exposed by MainWindowViewModel, such as &quot;View all customers&quot; and &quot;Create new customer.&quot; When the user clicks on a link, thus executing one of those commands, a workspace opens in the TabControl on the main window. The CommandViewModel class definition is shown here:&#xD;&#xA;&#xD;&#xA;C#&#xD;&#xA;&#xD;&#xA;Copy&#xD;&#xA;public class CommandViewModel : ViewModelBase&#xD;&#xA;{&#xD;&#xA;    public CommandViewModel(string displayName, ICommand command)&#xD;&#xA;    {&#xD;&#xA;        if (command == null)&#xD;&#xA;            throw new ArgumentNullException(&quot;command&quot;);&#xD;&#xA;        base.DisplayName = displayName;&#xD;&#xA;        this.Command = command;&#xD;&#xA;    }&#xD;&#xA;    public ICommand Command { get; private set; }&#xD;&#xA;}&#xD;&#xA;In the MainWindowResources.xaml file there exists a DataTemplate whose key is &quot;CommandsTemplate&quot;. MainWindow uses that template to render the collection of CommandViewModels mentioned earlier. The template simply renders each CommandViewModel object as a link in an ItemsControl. Each Hyperlink's Command property is bound to the Command property of a CommandViewModel. That XAML is shown in Figure 6.&#xD;&#xA;&#xD;&#xA;Figure 6 Render the List of Commands&#xD;&#xA;&#xD;&#xA;XML&#xD;&#xA;&#xD;&#xA;Copy&#xD;&#xA;&lt;!-- In MainWindowResources.xaml --&gt;&#xD;&#xA;&lt;!-- This template explains how to render the list of commands &#xD;&#xA;on the left side in the main window (the 'Control Panel' area). --&gt;&#xD;&#xA;&lt;DataTemplate x:Key=&quot;CommandsTemplate&quot;&gt;&#xD;&#xA;    &lt;ItemsControl ItemsSource=&quot;{Binding Path=Commands}&quot;&gt;&#xD;&#xA;        &lt;ItemsControl.ItemTemplate&gt;&#xD;&#xA;            &lt;DataTemplate&gt;&#xD;&#xA;                &lt;TextBlock Margin=&quot;2,6&quot;&gt; &#xD;&#xA;                    &lt;Hyperlink Command=&quot;{Binding Path=Command}&quot;&gt; &#xD;&#xA;                    &lt;TextBlock Text=&quot;{Binding Path=DisplayName}&quot; /&gt; &#xD;&#xA;                    &lt;/Hyperlink&gt; &#xD;&#xA;                &lt;/TextBlock&gt;&#xD;&#xA;            &lt;/DataTemplate&gt;&#xD;&#xA;        &lt;/ItemsControl.ItemTemplate&gt;&#xD;&#xA;    &lt;/ItemsControl&gt;&#xD;&#xA;&lt;/DataTemplate&gt;&#xD;&#xA;MainWindowViewModel Class&#xD;&#xA;As previously seen in the class diagram, the WorkspaceViewModelclass derives from ViewModelBase and adds the ability to close. By &quot;close,&quot; I mean that something removes the workspace from the user interface at run time. Three classes derive from WorkspaceViewModel: MainWindowViewModel, AllCustomersViewModel, and Customer" />
+
+        <GroupBox Header="Output:" Grid.Row="5" Grid.ColumnSpan="4" BorderBrush="White">
+            <TextBox IsReadOnly="True" VerticalScrollBarVisibility="Auto" Text="{Binding LogText}" />
+        </GroupBox>
 
     </Grid>
 </Window>

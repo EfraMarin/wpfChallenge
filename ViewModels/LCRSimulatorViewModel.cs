@@ -8,6 +8,9 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using wpfChallenge.Models;
+using wpfChallenge.Interfaces;
+using wpfChallenge.Services;
 
 namespace wpfChallenge.ViewModels
 {
@@ -15,6 +18,7 @@ namespace wpfChallenge.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
+        #region Properties
         private int _numberOfPlayers = 3;
         public int NumberOfPlayers
         {
@@ -41,6 +45,16 @@ namespace wpfChallenge.ViewModels
 
         private int _numberOfGamesToPlay = 1;
 
+        string _logText = "...";
+        public string LogText
+        {
+            get { return _logText; }
+            set
+            {
+                _logText = value;
+                NotifyChange();
+            }
+        }
 
         public int NumberOfGamesToPlay
         {
@@ -51,25 +65,48 @@ namespace wpfChallenge.ViewModels
                 NotifyChange();
             }
         }
+        public ICommand StartGamesCommand { get; set; }
+
+        ICollection<IBoardGame> _gamesList;
+
+        BoardGameService _gameService;
+
+        #endregion
         public LCRSimulatorViewModel()
         {
+            this._gameService = new BoardGameService();
+
             StartGamesCommand = new RelayCommand(x => RunGames(), c => CanRunGames());
+
         }
+
+        ~LCRSimulatorViewModel() { }
 
         private void NotifyChange([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ICommand StartGamesCommand { get; set; }
-
         public bool CanRunGames()
         {
             return this._numberOfPlayers >= 3 && this.NumberOfGamesToPlay > 0;
         }
+
         public void RunGames()
         {
+            this._logText = string.Empty;
 
+            this._gamesList = CreateGamesList();
+        }
+
+        ICollection<IBoardGame> CreateGamesList()
+        {
+            ICollection<IBoardGame> result = new List<IBoardGame>();
+
+            for (int i = 0; i < this._numberOfGamesToPlay; i++)
+                result.Add(this._gameService.CreateNewLCRGame(this._numberOfPlayers));
+
+            return result;
         }
 
     }

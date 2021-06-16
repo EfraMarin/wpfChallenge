@@ -18,7 +18,7 @@ namespace wpfChallenge.Services
                 BoardGameHelpers.CreateDefaultRules());
         }
 
-        public void RunGame(LCRGame game)
+        public LCRGame RunGame(LCRGame game)
         {
             while (!game.IsThereAWinner)
             {
@@ -27,6 +27,7 @@ namespace wpfChallenge.Services
             }
 
             Console.WriteLine($"After {game.TurnsTaken} turns, the winner is player {game.Winner.Id}");
+            return game;
         }
 
         public async Task RunGameAsync(LCRGame game)
