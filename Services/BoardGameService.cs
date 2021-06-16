@@ -14,7 +14,8 @@ namespace wpfChallenge.Services
         public LCRGame CreateNewLCRGame(int numberOfPlayers = 3)
         {
             return new LCRGame(BoardGameHelpers.CreateBoardGamePlayers(numberOfPlayers),
-                BoardGameHelpers.CreateDefaultDices());
+                BoardGameHelpers.CreateDefaultDices(),
+                BoardGameHelpers.CreateDefaultRules());
         }
 
         public void RunGame(LCRGame game)
