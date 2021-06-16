@@ -22,6 +22,7 @@ namespace wpfChallenge.Services
             while (!game.IsThereAWinner)
             {
                 game.ProcessNextTurn();
+                game.CheckForWinner();
             }
 
             Console.WriteLine($"After {game.TurnsTaken} turns, the winner is player {game.Winner.Id}");

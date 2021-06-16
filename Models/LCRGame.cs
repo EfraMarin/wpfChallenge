@@ -50,6 +50,13 @@ namespace wpfChallenge.Models
             this._turnsTaken++;
         }
 
+        public void CheckForWinner()
+        {
+            if (this._players.Where(p => p.RemainingChips > 0).Take(2).Count() == 1)
+                this.Winner = this._players.Where(p => p.RemainingChips > 0).First();
+
+        }
+
         void ApplyRules(List<DiceFaceType> results, ILCRPlayerBase player)
         {
             Dictionary<DiceFaceType, Action<ILCRPlayerBase>> rulesToApply = new Dictionary<DiceFaceType, Action<ILCRPlayerBase>>();
