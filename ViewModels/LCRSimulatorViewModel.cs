@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace wpfChallenge.ViewModels
 {
@@ -17,12 +21,26 @@ namespace wpfChallenge.ViewModels
             get { return _numberOfPlayers; }
             set
             {
-                _numberOfPlayers = value;
-                NotifyChange(nameof(NumberOfPlayers));
+                try
+                {
+                    if (value < 3)
+                    {
+                        MessageBox.Show("The number of players should be 3 or more");
+                        return;
+                    }
+
+                    _numberOfPlayers = value;
+                    NotifyChange();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Just numbers allowed");
+                }
             }
         }
 
-        private int _numberOfGamesToPlay;
+        private int _numberOfGamesToPlay = 1;
+
 
         public int NumberOfGamesToPlay
         {
@@ -30,16 +48,26 @@ namespace wpfChallenge.ViewModels
             set
             {
                 _numberOfGamesToPlay = value;
-                NotifyChange(nameof(NumberOfGamesToPlay));
+                NotifyChange();
             }
         }
+        public LCRSimulatorViewModel()
+        {
+            StartGamesCommand = new RelayCommand(x => RunGames(), c => CanRunGames());
+        }
 
-        private void NotifyChange(string propertyName)
+        private void NotifyChange([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void StartGame()
+        public ICommand StartGamesCommand { get; set; }
+
+        public bool CanRunGames()
+        {
+            return this._numberOfPlayers >= 3 && this.NumberOfGamesToPlay > 0;
+        }
+        public void RunGames()
         {
 
         }
