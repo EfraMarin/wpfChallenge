@@ -23,6 +23,16 @@ namespace wpfChallenge.Services
             {
                 game.ProcessNextTurn();
             }
+
+            Console.WriteLine($"After {game.TurnsTaken} turns, the winner is player {game.Winner.Id}");
+        }
+
+        public async Task RunGameAsync(LCRGame game)
+        {
+            await Task.Run(() =>
+            {
+                RunGame(game);
+            });
         }
     }
 }

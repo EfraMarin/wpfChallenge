@@ -9,6 +9,7 @@ namespace wpfChallenge.Models
 {
     public class LCRGame : IBoardGame
     {
+        int _turnsTaken = 0;
 
         Queue<ILCRPlayerBase> _players;
 
@@ -22,6 +23,8 @@ namespace wpfChallenge.Models
         {
             get { return _players.Count; }
         }
+
+        public int TurnsTaken { get => _turnsTaken; }
 
         public LCRGame(List<ILCRPlayerBase> players, List<Dice> dices)
         {
@@ -40,10 +43,14 @@ namespace wpfChallenge.Models
 
             var results = player.RollDices(this._dices);
 
+            ApplyRules(results, player);
+
             this._players.Enqueue(player);
+
+            this._turnsTaken++;
         }
 
-        void ApplyRules(List<DiceFaceType> results)
+        void ApplyRules(List<DiceFaceType> results, ILCRPlayerBase player)
         {
 
         }
