@@ -11,10 +11,11 @@ namespace wpfChallenge.Services
 {
     public class BoardGameService
     {
-        public LCRGame CreateNewLCRGame(int numberOfPlayers = 3)
+        public LCRGame CreateNewLCRGame(int numberOfPlayers = 3, Random randomGenerator = null)
         {
+
             return new LCRGame(BoardGameHelpers.CreateBoardGamePlayers(numberOfPlayers),
-                BoardGameHelpers.CreateDefaultDices(),
+                BoardGameHelpers.CreateDefaultDices(randomGenerator ?? new Random()),
                 BoardGameHelpers.CreateDefaultRules());
         }
 
@@ -25,8 +26,9 @@ namespace wpfChallenge.Services
                 game.ProcessNextTurn();
                 game.CheckForWinner();
             }
-
+#if DEBUG
             Console.WriteLine($"After {game.TurnsTaken} turns, the winner is player {game.Winner.Id}");
+#endif
             return game;
         }
 

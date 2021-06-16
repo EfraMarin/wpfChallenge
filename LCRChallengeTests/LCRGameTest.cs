@@ -11,11 +11,11 @@ namespace LCRChallengeTests
         [TestMethod]
         public void LessThanMinimumPlayserShouldThrowException()
         {
-
+            Random random = new Random();
             Action instantiation = () =>
             {
                 LCRGame game = new LCRGame(BoardGameHelpers.CreateBoardGamePlayers(2),
-                    BoardGameHelpers.CreateDefaultDices(),
+                    BoardGameHelpers.CreateDefaultDices(random),
                     BoardGameHelpers.CreateDefaultRules());
 
             };

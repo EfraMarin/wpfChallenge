@@ -24,10 +24,10 @@ namespace wpfChallenge.Models
             get { return this._faces.Count; }
         }
 
-        public Dice(List<DiceFaceType> faces)
+        public Dice(List<DiceFaceType> faces, Random randomGenerator)
         {
             this._faces = faces;
-            this._random = new Random();
+            this._random = randomGenerator;
         }
 
         public DiceFaceType Roll()

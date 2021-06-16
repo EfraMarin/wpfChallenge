@@ -11,6 +11,7 @@ using System.Windows.Input;
 using wpfChallenge.Models;
 using wpfChallenge.Interfaces;
 using wpfChallenge.Services;
+using System.Configuration;
 
 namespace wpfChallenge.ViewModels
 {
@@ -19,7 +20,9 @@ namespace wpfChallenge.ViewModels
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         #region Properties
-        private int _numberOfPlayers = 3;
+        int _minimumPlayers;
+
+        private int _numberOfPlayers;
         public int NumberOfPlayers
         {
             get { return _numberOfPlayers; }
@@ -45,13 +48,15 @@ namespace wpfChallenge.ViewModels
 
         private int _numberOfGamesToPlay = 1;
 
-        string _logText = "...";
+        StringBuilder _logText;
         public string LogText
         {
-            get { return _logText; }
+            get { return _logText.ToString(); }
             set
             {
-                _logText = value;
+                if (string.IsNullOrEmpty(value))
+                    _logText.Clear();
+
                 NotifyChange();
             }
         }
@@ -74,10 +79,15 @@ namespace wpfChallenge.ViewModels
         #endregion
         public LCRSimulatorViewModel()
         {
+            _minimumPlayers = Convert.ToInt32(ConfigurationManager.AppSettings["minimumPlayers"].ToString());
+
+            this.NumberOfPlayers = _minimumPlayers;
+
             this._gameService = new BoardGameService();
 
             StartGamesCommand = new RelayCommand(async x => await RunGames(), c => CanRunGames());
 
+            this._logText = new StringBuilder();
         }
 
         ~LCRSimulatorViewModel() { }
@@ -89,27 +99,30 @@ namespace wpfChallenge.ViewModels
 
         public bool CanRunGames()
         {
-            return this._numberOfPlayers >= 3 && this.NumberOfGamesToPlay > 0;
+            return this._numberOfPlayers >= _minimumPlayers && this.NumberOfGamesToPlay > 0;
         }
 
         public async Task RunGames()
         {
-            this._logText = string.Empty;
+            LogText = string.Empty;
 
-            //this._gamesList = CreateGamesList();
+            Random random = new Random();
 
             for (int i = 0; i < this._numberOfGamesToPlay; i++)
             {
-                Func<BoardGameService, LCRGame> func = (s) => s.RunGame(s.CreateNewLCRGame(this._numberOfPlayers));
+                Func<BoardGameService, LCRGame> func = (s) => s.RunGame(s.CreateNewLCRGame(this._numberOfPlayers, random));
 
-                var r = func(this._gameService);
+                var r = await Task.Run(() => func(this._gameService));
+
+                AppendGameResult(r);
             }
+            this.LogText = this._logText.ToString();
 
         }
 
-        private void LogResults(LCRGame[] results)
+        private void AppendGameResult(LCRGame gameResult)
         {
-
+            this._logText.AppendLine($"After {gameResult.TurnsTaken} turns, the winner is player {gameResult.Winner.Id}");
         }
     }
 }

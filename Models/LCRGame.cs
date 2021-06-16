@@ -19,7 +19,7 @@ namespace wpfChallenge.Models
 
         public ILCRPlayerBase Winner { get; private set; }
 
-        public bool IsThereAWinner { get { return Winner != null; } }
+        public bool IsThereAWinner { get => Winner != null; }
 
         public int NumberOfPlayers
         {

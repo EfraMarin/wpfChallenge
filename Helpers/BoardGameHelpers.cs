@@ -25,7 +25,7 @@ namespace wpfChallenge.Helpers
 
         }
 
-        public static List<Dice> CreateDefaultDices()
+        public static List<Dice> CreateDefaultDices(Random randomGenerator = null)
         {
             Dice defaultDice = new Dice(new List<DiceFaceType>()
                 {
@@ -35,7 +35,7 @@ namespace wpfChallenge.Helpers
                     DiceFaceType.L,
                     DiceFaceType.C,
                     DiceFaceType.R,
-                });
+                }, randomGenerator ?? new Random());
 
             return new List<Dice>()
             {
