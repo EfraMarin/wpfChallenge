@@ -10,5 +10,10 @@ namespace wpfChallenge.ViewModels
     public class LCRSimulatorViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
+
+        public override string ToString()
+        {
+            return "Overriado";
+        }
     }
 }

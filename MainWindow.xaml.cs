@@ -24,8 +24,6 @@ namespace wpfChallenge
         public MainWindow()
         {
             InitializeComponent();
-
-            this.DataContext = new LCRSimulatorViewModel();
         }
     }
 }

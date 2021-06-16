@@ -41,6 +41,8 @@ namespace wpfChallenge.Models
 
         }
 
+        ~LCRGame() { }
+
         public void ProcessNextTurn()
         {
             ILCRPlayerBase player = this._players.Dequeue();

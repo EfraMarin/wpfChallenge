@@ -4,11 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfChallenge"
+        xmlns:vm="clr-namespace:wpfChallenge.ViewModels"
         mc:Ignorable="d"
-        Title="LCR Game Simulator" Height="500" Width="500">
-    <Grid>
+        Title="LCR Game Simulator" Height="500" Width="500" FontSize="14">
+    <Window.DataContext>
+        <vm:LCRSimulatorViewModel/>
+    </Window.DataContext>
+    <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
+            <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -20,7 +26,30 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="LCR Game Simulator" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Text="LCR Game Simulator" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="DemiBold"/>
+
+        <GroupBox Grid.Row="1" Header="Game Settings" Grid.ColumnSpan="4">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition/>
+                    
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Number of players" />
+                <TextBox Grid.Row="1"/>
+
+                <TextBlock Text="Number of games to play" Grid.Column="2" />
+                <TextBox Grid.Row="1" Grid.Column="2"/>
+
+            </Grid>
+        </GroupBox>
 
     </Grid>
 </Window>
