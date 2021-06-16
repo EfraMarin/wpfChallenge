@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Interfaces\ILCRPlayerBase.cs" />
     <Compile Include="Services\BoardGameService.cs" />
+    <Compile Include="ViewModels\LCRSimulatorViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,8 +105,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
