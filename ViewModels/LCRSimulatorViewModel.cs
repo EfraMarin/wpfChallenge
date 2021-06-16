@@ -11,9 +11,38 @@ namespace wpfChallenge.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
-        public override string ToString()
+        private int _numberOfPlayers = 3;
+        public int NumberOfPlayers
         {
-            return "Overriado";
+            get { return _numberOfPlayers; }
+            set
+            {
+                _numberOfPlayers = value;
+                NotifyChange(nameof(NumberOfPlayers));
+            }
         }
+
+        private int _numberOfGamesToPlay;
+
+        public int NumberOfGamesToPlay
+        {
+            get { return _numberOfGamesToPlay; }
+            set
+            {
+                _numberOfGamesToPlay = value;
+                NotifyChange(nameof(NumberOfGamesToPlay));
+            }
+        }
+
+        private void NotifyChange(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void StartGame()
+        {
+
+        }
+
     }
 }
