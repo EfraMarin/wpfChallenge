@@ -15,7 +15,8 @@ namespace LCRChallengeTests
             Action instantiation = () =>
             {
                 LCRGame game = new LCRGame(BoardGameHelpers.CreateBoardGamePlayers(2),
-                    BoardGameHelpers.CreateDefaultDices());
+                    BoardGameHelpers.CreateDefaultDices(),
+                    BoardGameHelpers.CreateDefaultRules());
 
             };
 

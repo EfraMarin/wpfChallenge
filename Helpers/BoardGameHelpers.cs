@@ -2,6 +2,7 @@
 using wpfChallenge.Models;
 using System.Linq;
 using wpfChallenge.Interfaces;
+using System;
 
 namespace wpfChallenge.Helpers
 {
@@ -43,5 +44,20 @@ namespace wpfChallenge.Helpers
                 (Dice)defaultDice.Clone(),
             };
         }
+
+        public static Dictionary<DiceFaceType, Action<ILCRPlayerBase>> CreateDefaultRules()
+        {
+            return new Dictionary<DiceFaceType, Action<ILCRPlayerBase>>
+            {
+                [DiceFaceType.Dot] = (p) => { },
+
+                [DiceFaceType.L] = (p) => p.PassChipsToPlayer(1, p.PlayerToLeft),
+
+                [DiceFaceType.C] = (p) => p.PassChipsToPlayer(1, null),
+
+                [DiceFaceType.R] = (p) => p.PassChipsToPlayer(1, p.PlayerToRight)
+            };
+        }
+
     }
 }

@@ -11,7 +11,7 @@ namespace LCRChallengeTests
         {
             BoardGameService service = new BoardGameService();
 
-            var newGame = service.CreateNewLCRGame(1000);
+            var newGame = service.CreateNewLCRGame(3);
 
             service.RunGame(newGame);
 
