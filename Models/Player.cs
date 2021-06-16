@@ -55,5 +55,21 @@ namespace wpfChallenge.Models
 
             return results;
         }
+
+        public void PassChipsToPlayer(int chips, ILCRPlayerBase player)
+        {
+            this._chips--;
+
+            if (player is null) return;
+
+            player.IncreaseChips();
+
+        }
+
+        public int IncreaseChips(int count = 1)
+        {
+            this._chips += count;
+            return RemainingChips;
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace wpfChallenge.Models
         {
             ILCRPlayerBase player = this._players.Dequeue();
 
-            var results = player.RollDices(this._dices);
+            var results = player.RollDices(this._dices.Take(player.RemainingChips).ToList());
 
             ApplyRules(results, player);
 
@@ -52,6 +52,16 @@ namespace wpfChallenge.Models
 
         void ApplyRules(List<DiceFaceType> results, ILCRPlayerBase player)
         {
+            Dictionary<DiceFaceType, Action<ILCRPlayerBase>> rulesToApply = new Dictionary<DiceFaceType, Action<ILCRPlayerBase>>();
+
+            rulesToApply[DiceFaceType.Dot] = (p) => { };
+            rulesToApply[DiceFaceType.L] = (p) => p.PassChipsToPlayer(1, p.PlayerToLeft);
+            rulesToApply[DiceFaceType.C] = (p) => p.PassChipsToPlayer(1, null);
+            rulesToApply[DiceFaceType.R] = (p) => p.PassChipsToPlayer(1, p.PlayerToRight);
+
+            foreach (var face in results)
+                rulesToApply[face](player);
+
 
         }
     }
