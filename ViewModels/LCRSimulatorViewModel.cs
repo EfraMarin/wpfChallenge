@@ -76,7 +76,7 @@ namespace wpfChallenge.ViewModels
         {
             this._gameService = new BoardGameService();
 
-            StartGamesCommand = new RelayCommand(x => RunGames(), c => CanRunGames());
+            StartGamesCommand = new RelayCommand(async x => await RunGames(), c => CanRunGames());
 
         }
 
@@ -92,29 +92,24 @@ namespace wpfChallenge.ViewModels
             return this._numberOfPlayers >= 3 && this.NumberOfGamesToPlay > 0;
         }
 
-        public void RunGames()
+        public async Task RunGames()
         {
             this._logText = string.Empty;
 
-            this._gamesList = CreateGamesList();
-
-            Task.add
-
-            foreach (var game in this._gamesList)
-            {
-
-            }
-        }
-
-        ICollection<IBoardGame> CreateGamesList()
-        {
-            ICollection<IBoardGame> result = new List<IBoardGame>();
+            //this._gamesList = CreateGamesList();
 
             for (int i = 0; i < this._numberOfGamesToPlay; i++)
-                result.Add(this._gameService.CreateNewLCRGame(this._numberOfPlayers));
+            {
+                Func<BoardGameService, LCRGame> func = (s) => s.RunGame(s.CreateNewLCRGame(this._numberOfPlayers));
 
-            return result;
+                var r = func(this._gameService);
+            }
+
         }
 
+        private void LogResults(LCRGame[] results)
+        {
+
+        }
     }
 }
