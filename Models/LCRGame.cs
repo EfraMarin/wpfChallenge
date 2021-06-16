@@ -3,25 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using wpfChallenge.Interfaces;
 
 namespace wpfChallenge.Models
 {
     public class LCRGame
     {
-        public LCRGame(int numberOfPlayers = 3)
+
+        List<IBoarGamePlayer> _players;
+        
+        List<Dice> _dices;
+
+        public IBoarGamePlayer Winner { get; private set; }
+
+        public LCRGame(List<IBoarGamePlayer> players, List<Dice> dices)
         {
-            if (numberOfPlayers < 3)
+            if (players.Count < 3)
                 throw new Exception("The minimum number of required players is 3");
+            
+            this._players = players;
+            
+            this._dices = dices;
 
-            this._numberOfPlayers = numberOfPlayers;
         }
-
-        private int _numberOfPlayers;
 
         public int NumberOfPlayers
         {
-            get { return _numberOfPlayers; }
-            private set { _numberOfPlayers = value; }
+            get { return _players.Count; }
         }
 
 
