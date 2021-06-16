@@ -97,6 +97,13 @@ namespace wpfChallenge.ViewModels
             this._logText = string.Empty;
 
             this._gamesList = CreateGamesList();
+
+            Task.add
+
+            foreach (var game in this._gamesList)
+            {
+
+            }
         }
 
         ICollection<IBoardGame> CreateGamesList()

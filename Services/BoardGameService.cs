@@ -30,12 +30,14 @@ namespace wpfChallenge.Services
             return game;
         }
 
-        public async Task RunGameAsync(LCRGame game)
+        public async Task<LCRGame> RunGameAsync(LCRGame game)
         {
             await Task.Run(() =>
             {
                 RunGame(game);
             });
+
+            return game;
         }
     }
 }
