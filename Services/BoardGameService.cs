@@ -13,13 +13,16 @@ namespace wpfChallenge.Services
     {
         public LCRGame CreateNewLCRGame(int numberOfPlayers = 3)
         {
-            return new LCRGame(BoardGameHelpers.CreateBoarGamePlayers(numberOfPlayers),
+            return new LCRGame(BoardGameHelpers.CreateBoardGamePlayers(numberOfPlayers),
                 BoardGameHelpers.CreateDefaultDices());
         }
 
         public void RunGame(LCRGame game)
         {
-            
+            while (!game.IsThereAWinner)
+            {
+                game.ProcessNextTurn();
+            }
         }
     }
 }

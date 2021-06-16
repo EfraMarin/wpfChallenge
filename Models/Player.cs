@@ -3,12 +3,12 @@ using wpfChallenge.Interfaces;
 
 namespace wpfChallenge.Models
 {
-    public class Player : IPlayer, IBoarGamePlayer, ILCRPlayer
+    public class Player : ILCRPlayerBase
     {
         int _chips = 3;
-        public IBoarGamePlayer PlayerToLeft { get; set; }
+        public ILCRPlayerBase PlayerToLeft { get; set; }
 
-        public IBoarGamePlayer PlayerToRight { get; set; }
+        public ILCRPlayerBase PlayerToRight { get; set; }
 
         private int _id;
 
@@ -24,7 +24,7 @@ namespace wpfChallenge.Models
         {
         }
 
-        public bool SitNextTo(IBoarGamePlayer player, bool toLeft = true)
+        public bool SitNextTo(ILCRPlayerBase player, bool toLeft = true)
         {
             /**
       *     1

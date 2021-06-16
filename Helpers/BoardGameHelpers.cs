@@ -7,9 +7,9 @@ namespace wpfChallenge.Helpers
 {
     public class BoardGameHelpers
     {
-        public static List<IBoarGamePlayer> CreateBoarGamePlayers(int count)
+        public static List<ILCRPlayerBase> CreateBoardGamePlayers(int count)
         {
-            List<IBoarGamePlayer> result = new List<IBoarGamePlayer>(count);
+            List<ILCRPlayerBase> result = new List<ILCRPlayerBase>(count);
 
             for (int i = 0; i < count; i++)
             {

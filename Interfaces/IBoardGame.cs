@@ -1,9 +1,9 @@
 ﻿namespace wpfChallenge.Interfaces
 {
-    interface IBoardGame
+    public interface IBoardGame
     {
-        void Start();
+        ILCRPlayerBase Winner { get; }
 
-        void Finish();
+        void ProcessNextTurn();
     }
 }
