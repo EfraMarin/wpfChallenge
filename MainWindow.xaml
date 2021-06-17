@@ -58,11 +58,6 @@
         <!--Statistics (row 3)-->
         <GroupBox Header="Statistics" Grid.Row="3" Grid.ColumnSpan="4">
             <Grid>
-                <!--<Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>-->
 
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -74,16 +69,28 @@
                 <TextBlock>
                     <TextBlock.Text>
                         <MultiBinding StringFormat="The shortest game took {0} turns to finish">
-                            <Binding Path="NumberOfPlayers"/>
+                            <Binding Path="ShortestGameLength"/>
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
 
                 <!--longest length game-->
-                <TextBlock Text="longest length game" Grid.Row="1"/>
+                <TextBlock Grid.Row="1">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="The largest game took {0} turns to finish">
+                            <Binding Path="LargestGameLength"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
 
                 <!--average length game-->
-                <TextBlock Text="average length game" Grid.Row="2"/>
+                <TextBlock Grid.Row="2">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="The average number of turns to finish was {0}">
+                            <Binding Path="AverageGameLength"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
 
             </Grid>
         </GroupBox>

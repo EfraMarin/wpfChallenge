@@ -147,6 +147,9 @@ namespace wpfChallenge.ViewModels
 
                 playedGanes.Add(r);
             }
+
+            SetStatisticsAsync(playedGanes);
+
             //option 1 loggueo
             //LogText = _logText.Append("Listo").ToString();
             await LogGameResult(playedGanes);
