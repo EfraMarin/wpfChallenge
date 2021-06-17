@@ -76,6 +76,25 @@ namespace wpfChallenge.ViewModels
 
         BoardGameService _gameService;
 
+        int _shortestGameLength, _largestGameLength;
+
+        double _averageGameLength;
+        public int ShortestGameLength
+        {
+            get => _shortestGameLength;
+            set { _shortestGameLength = value; NotifyChange(); }
+        }
+        public int LargestGameLength
+        {
+            get => _largestGameLength;
+            set { _largestGameLength = value; NotifyChange(); }
+        }
+        public double AverageGameLength
+        {
+            get => _averageGameLength;
+            set { _averageGameLength = value; NotifyChange(); }
+        }
+
         #endregion
         public LCRSimulatorViewModel()
         {
@@ -108,21 +127,55 @@ namespace wpfChallenge.ViewModels
 
             Random random = new Random();
 
+            ////option 1
+            //List<Task<LCRGame>> tasks = new List<Task<LCRGame>>();
+
+            //for (int i = 0; i < this._numberOfGamesToPlay; i++)
+            //    tasks.Add(_gameService.RunGameAsync(_gameService.CreateNewLCRGame(_numberOfPlayers, random)));
+
+            //var r = await Task.WhenAll(tasks);
+            //await LogGameResult(r);
+
+            ////option 2
+            ///
+            List<LCRGame> playedGanes = new List<LCRGame>();
             for (int i = 0; i < this._numberOfGamesToPlay; i++)
             {
                 Func<BoardGameService, LCRGame> func = (s) => s.RunGame(s.CreateNewLCRGame(this._numberOfPlayers, random));
 
                 var r = await Task.Run(() => func(this._gameService));
 
-                AppendGameResult(r);
+                playedGanes.Add(r);
             }
-            this.LogText = this._logText.ToString();
-
+            //option 1 loggueo
+            //LogText = _logText.Append("Listo").ToString();
+            await LogGameResult(playedGanes);
         }
 
-        private void AppendGameResult(LCRGame gameResult)
+        async Task LogGameResult(ICollection<LCRGame> gameResults)
         {
-            this._logText.AppendLine($"After {gameResult.TurnsTaken} turns, the winner is player {gameResult.Winner.Id}");
+            await Task.Run(() =>
+            {
+                foreach (var game in gameResults)
+                    this._logText.AppendLine($"After {game.TurnsTaken} turns, the winner is player {game.Winner.Id}");
+
+            });
+
+            this.LogText = this._logText.ToString();
         }
+
+
+        async Task SetStatisticsAsync(ICollection<LCRGame> gameResults)
+        {
+            await Task.Run(() =>
+            {
+                gameResults = gameResults.OrderByDescending(x => x.TurnsTaken).ToList();
+
+                this.LargestGameLength = gameResults.First().TurnsTaken;
+                this.ShortestGameLength = gameResults.Last().TurnsTaken;
+                this.AverageGameLength = gameResults.Average(x => x.TurnsTaken);
+            });
+        }
+
     }
 }
