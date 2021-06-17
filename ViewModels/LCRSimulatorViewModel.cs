@@ -90,7 +90,7 @@ namespace wpfChallenge.ViewModels
             get => _largestGameLength;
             set { _largestGameLength = value; NotifyChange(); }
         }
-        
+
         public double AverageGameLength
         {
             get => _averageGameLength;
@@ -100,7 +100,7 @@ namespace wpfChallenge.ViewModels
         bool _simulationInProgress = false;
 
         #endregion
-        
+
         public LCRSimulatorViewModel()
         {
             _minimumPlayers = Convert.ToInt32(ConfigurationManager.AppSettings["minimumPlayers"].ToString());
@@ -165,6 +165,11 @@ namespace wpfChallenge.ViewModels
             //await LogGameResult(playedGanes);
         }
 
+        /// <summary>
+        /// Logs a message on the UI
+        /// </summary>
+        /// <param name="message">Message to notify</param>
+        /// <returns>An awaitable function</returns>
         async Task LogToOutPut(string message)
         {
             await Task.Run(() =>
@@ -174,7 +179,7 @@ namespace wpfChallenge.ViewModels
 
             NotifyChange(nameof(this.LogText));
         }
-        
+
         async Task LogGameResult(ICollection<LCRGame> gameResults)
         {
             await Task.Run(() =>
@@ -193,7 +198,12 @@ namespace wpfChallenge.ViewModels
             this.ShortestGameLength = 0;
             this.AverageGameLength = 0;
         }
-        
+
+        /// <summary>
+        /// Set statistic values to be displayed on UI
+        /// </summary>
+        /// <param name="gameResults">List of finished games to extract statistics</param>
+        /// <returns>Awaitable function</returns>
         async Task SetStatisticsAsync(ICollection<LCRGame> gameResults)
         {
             await Task.Run(() =>
@@ -204,8 +214,8 @@ namespace wpfChallenge.ViewModels
                 this.ShortestGameLength = gameResults.Last().TurnsTaken;
                 this.AverageGameLength = gameResults.Average(x => x.TurnsTaken);
             });
-        } 
-        
+        }
+
         #endregion
 
     }
