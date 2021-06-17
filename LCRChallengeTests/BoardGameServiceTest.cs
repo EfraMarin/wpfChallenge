@@ -13,9 +13,17 @@ namespace LCRChallengeTests
 
             var newGame = service.CreateNewLCRGame(3);
 
-            //service.RunGame(newGame);
-
             Assert.IsNotNull(newGame);
+        }
+
+        [TestMethod]
+        public void ThereMustBeAWinner()
+        {
+            BoardGameService service = new BoardGameService();
+            var result = service.RunGame(service.CreateNewLCRGame(3));
+
+            Assert.IsTrue(result.IsThereAWinner && result.Winner != null);
+
         }
     }
 }
