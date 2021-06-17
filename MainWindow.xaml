@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfChallenge"
-        xmlns:vm="clr-namespace:wpfChallenge.ViewModels"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        xmlns:vm="clr-namespace:wpfChallenge.ViewModels"
         Title="LCR Game Simulator" Height="600" Width="500" FontSize="14">
     <Window.DataContext>
         <vm:LCRSimulatorViewModel/>
@@ -68,27 +68,21 @@
                 <!--shortest length game-->
                 <TextBlock>
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="The shortest game took {0} turns to finish">
-                            <Binding Path="ShortestGameLength"/>
-                        </MultiBinding>
+                        <Binding StringFormat="The shortest game took {0} turns to finish" Path="ShortestGameLength"/>
                     </TextBlock.Text>
                 </TextBlock>
 
                 <!--longest length game-->
                 <TextBlock Grid.Row="1">
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="The largest game took {0} turns to finish">
-                            <Binding Path="LargestGameLength"/>
-                        </MultiBinding>
+                        <Binding StringFormat="The largest game took {0} turns to finish" Path="LargestGameLength"/>
                     </TextBlock.Text>
                 </TextBlock>
 
                 <!--average length game-->
                 <TextBlock Grid.Row="2">
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="The average number of turns to finish was {0}">
-                            <Binding Path="AverageGameLength"/>
-                        </MultiBinding>
+                        <Binding StringFormat="The average number of turns to finish was {0}" Path="AverageGameLength"/>
                     </TextBlock.Text>
                 </TextBlock>
 
