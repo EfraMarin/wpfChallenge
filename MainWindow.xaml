@@ -58,8 +58,7 @@
 
         <!--Statistics (row 3)-->
         <GroupBox Header="Statistics" Grid.Row="3" Grid.ColumnSpan="4">
-            <Grid>
-
+            <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>

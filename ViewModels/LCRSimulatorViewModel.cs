@@ -118,7 +118,7 @@ namespace wpfChallenge.ViewModels
 
         public bool CanRunSimulations()
         {
-            return this._numberOfPlayers >= _minimumPlayers && this.NumberOfGamesToPlay > 0;
+            return !_simulationInProgress && this._numberOfPlayers >= _minimumPlayers && this.NumberOfGamesToPlay > 0;
         }
 
         public async Task RunGamesSimulation()
@@ -128,10 +128,12 @@ namespace wpfChallenge.ViewModels
 
             Random random = new Random();
 
-            
+
             LogToOutPut("Creating game collection to simulate...");
 
             List<LCRGame> playedGanes = new List<LCRGame>();
+
+            _simulationInProgress = true;
 
             LogToOutPut("Simulation in progress...");
 
@@ -149,6 +151,7 @@ namespace wpfChallenge.ViewModels
 
             LogToOutPut("Simulation Finished!");
 
+            _simulationInProgress = false;
             //await LogGameResult(playedGanes);
         }
 
