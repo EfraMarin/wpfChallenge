@@ -20,6 +20,7 @@ namespace wpfChallenge.ViewModels
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
         #region Properties
+
         int _minimumPlayers;
 
         private int _numberOfPlayers;
@@ -77,16 +78,19 @@ namespace wpfChallenge.ViewModels
         int _shortestGameLength, _largestGameLength;
 
         double _averageGameLength;
+
         public int ShortestGameLength
         {
             get => _shortestGameLength;
             set { _shortestGameLength = value; NotifyChange(); }
         }
+
         public int LargestGameLength
         {
             get => _largestGameLength;
             set { _largestGameLength = value; NotifyChange(); }
         }
+        
         public double AverageGameLength
         {
             get => _averageGameLength;
@@ -96,6 +100,7 @@ namespace wpfChallenge.ViewModels
         bool _simulationInProgress = false;
 
         #endregion
+        
         public LCRSimulatorViewModel()
         {
             _minimumPlayers = Convert.ToInt32(ConfigurationManager.AppSettings["minimumPlayers"].ToString());
@@ -111,6 +116,11 @@ namespace wpfChallenge.ViewModels
 
         ~LCRSimulatorViewModel() { }
 
+        #region Methods
+        /// <summary>
+        /// Notifies changes on Binding properties to update UI
+        /// </summary>
+        /// <param name="propertyName">The name of property that notifies that has changed</param>
         private void NotifyChange([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -164,6 +174,7 @@ namespace wpfChallenge.ViewModels
 
             NotifyChange(nameof(this.LogText));
         }
+        
         async Task LogGameResult(ICollection<LCRGame> gameResults)
         {
             await Task.Run(() =>
@@ -182,6 +193,7 @@ namespace wpfChallenge.ViewModels
             this.ShortestGameLength = 0;
             this.AverageGameLength = 0;
         }
+        
         async Task SetStatisticsAsync(ICollection<LCRGame> gameResults)
         {
             await Task.Run(() =>
@@ -192,7 +204,9 @@ namespace wpfChallenge.ViewModels
                 this.ShortestGameLength = gameResults.Last().TurnsTaken;
                 this.AverageGameLength = gameResults.Average(x => x.TurnsTaken);
             });
-        }
+        } 
+        
+        #endregion
 
     }
 }

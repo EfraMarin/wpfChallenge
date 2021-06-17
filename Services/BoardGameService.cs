@@ -28,7 +28,7 @@ namespace wpfChallenge.Services
         /// Starts the given game and processes turns until there is a Winner
         /// </summary>
         /// <param name="game">The game to run</param>
-        /// <returns></returns>
+        /// <returns>The game when it's over</returns>
         public LCRGame RunGame(LCRGame game)
         {
             while (!game.IsThereAWinner)
@@ -42,6 +42,11 @@ namespace wpfChallenge.Services
             return game;
         }
 
+        /// <summary>
+        /// Starts the given game and processes asynchronously turns until there is a Winner
+        /// </summary>
+        /// <param name="game">The game to run</param>
+        /// <returns>The game when it's over</returns>
         public async Task<LCRGame> RunGameAsync(LCRGame game)
         {
             await Task.Run(() =>
