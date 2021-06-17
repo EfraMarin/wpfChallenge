@@ -48,6 +48,16 @@ namespace wpfChallenge.ViewModels
 
         private int _numberOfGamesToPlay = 1;
 
+        public int NumberOfGamesToPlay
+        {
+            get { return _numberOfGamesToPlay; }
+            set
+            {
+                _numberOfGamesToPlay = value;
+                NotifyChange();
+            }
+        }
+
         StringBuilder _logText;
         public string LogText
         {
@@ -60,19 +70,7 @@ namespace wpfChallenge.ViewModels
                 NotifyChange();
             }
         }
-
-        public int NumberOfGamesToPlay
-        {
-            get { return _numberOfGamesToPlay; }
-            set
-            {
-                _numberOfGamesToPlay = value;
-                NotifyChange();
-            }
-        }
         public ICommand StartGamesCommand { get; set; }
-
-        ICollection<IBoardGame> _gamesList;
 
         BoardGameService _gameService;
 
@@ -95,6 +93,8 @@ namespace wpfChallenge.ViewModels
             set { _averageGameLength = value; NotifyChange(); }
         }
 
+        bool _simulationInProgress = false;
+
         #endregion
         public LCRSimulatorViewModel()
         {
@@ -104,7 +104,7 @@ namespace wpfChallenge.ViewModels
 
             this._gameService = new BoardGameService();
 
-            StartGamesCommand = new RelayCommand(async x => await RunGames(), c => CanRunGames());
+            StartGamesCommand = new RelayCommand(async x => await RunGamesSimulation(), c => CanRunSimulations());
 
             this._logText = new StringBuilder();
         }
@@ -116,29 +116,25 @@ namespace wpfChallenge.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public bool CanRunGames()
+        public bool CanRunSimulations()
         {
             return this._numberOfPlayers >= _minimumPlayers && this.NumberOfGamesToPlay > 0;
         }
 
-        public async Task RunGames()
+        public async Task RunGamesSimulation()
         {
             LogText = string.Empty;
+            ResetStatistics();
 
             Random random = new Random();
 
-            ////option 1
-            //List<Task<LCRGame>> tasks = new List<Task<LCRGame>>();
+            
+            LogToOutPut("Creating game collection to simulate...");
 
-            //for (int i = 0; i < this._numberOfGamesToPlay; i++)
-            //    tasks.Add(_gameService.RunGameAsync(_gameService.CreateNewLCRGame(_numberOfPlayers, random)));
-
-            //var r = await Task.WhenAll(tasks);
-            //await LogGameResult(r);
-
-            ////option 2
-            ///
             List<LCRGame> playedGanes = new List<LCRGame>();
+
+            LogToOutPut("Simulation in progress...");
+
             for (int i = 0; i < this._numberOfGamesToPlay; i++)
             {
                 Func<BoardGameService, LCRGame> func = (s) => s.RunGame(s.CreateNewLCRGame(this._numberOfPlayers, random));
@@ -147,14 +143,24 @@ namespace wpfChallenge.ViewModels
 
                 playedGanes.Add(r);
             }
+            LogToOutPut($"Calculating statistics for {NumberOfGamesToPlay.ToString("#,##")} simulated games...");
 
             SetStatisticsAsync(playedGanes);
 
-            //option 1 loggueo
-            //LogText = _logText.Append("Listo").ToString();
-            await LogGameResult(playedGanes);
+            LogToOutPut("Simulation Finished!");
+
+            //await LogGameResult(playedGanes);
         }
 
+        async Task LogToOutPut(string message)
+        {
+            await Task.Run(() =>
+            {
+                this._logText.AppendLine(message);
+            });
+
+            NotifyChange(nameof(this.LogText));
+        }
         async Task LogGameResult(ICollection<LCRGame> gameResults)
         {
             await Task.Run(() =>
@@ -164,10 +170,15 @@ namespace wpfChallenge.ViewModels
 
             });
 
-            this.LogText = this._logText.ToString();
+            NotifyChange(nameof(this.LogText));
         }
 
-
+        void ResetStatistics()
+        {
+            this.LargestGameLength = 0;
+            this.ShortestGameLength = 0;
+            this.AverageGameLength = 0;
+        }
         async Task SetStatisticsAsync(ICollection<LCRGame> gameResults)
         {
             await Task.Run(() =>
