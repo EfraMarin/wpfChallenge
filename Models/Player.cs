@@ -23,7 +23,7 @@ namespace wpfChallenge.Models
         public Player()
         {
         }
-
+        
         public bool SitNextTo(ILCRPlayerBase player, bool toLeft = true)
         {
             /**

@@ -43,6 +43,9 @@ namespace wpfChallenge.Models
 
         ~LCRGame() { }
 
+        /// <summary>
+        /// Process the next turn in case that there is no winner yet.
+        /// </summary>
         public void ProcessNextTurn()
         {
             ILCRPlayerBase player = this._players.Dequeue();
@@ -56,6 +59,9 @@ namespace wpfChallenge.Models
             this._turnsTaken++;
         }
 
+        /// <summary>
+        /// Check if there is an actual win and sets the property <see cref="Winner"/>
+        /// </summary>
         public void CheckForWinner()
         {
             if (this._players.Where(p => p.RemainingChips > 0).Take(2).Count() == 1)
@@ -63,6 +69,11 @@ namespace wpfChallenge.Models
 
         }
 
+        /// <summary>
+        /// Apply the rules according to the resulting faces after rolling the dices (see <seealso cref="Dice.Roll"/>)
+        /// </summary>
+        /// <param name="results"></param>
+        /// <param name="player"></param>
         void ApplyRules(List<DiceFaceType> results, ILCRPlayerBase player)
         {
             foreach (var face in results)

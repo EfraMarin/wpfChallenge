@@ -10,7 +10,12 @@ using wpfChallenge.Models;
 namespace wpfChallenge.Services
 {
     public class BoardGameService
-    {
+    {/// <summary>
+     /// Create the dependencies needed to create a complete LCR game
+     /// </summary>
+     /// <param name="numberOfPlayers">Number of players in the game</param>
+     /// <param name="randomGenerator"></param>
+     /// <returns></returns>
         public LCRGame CreateNewLCRGame(int numberOfPlayers = 3, Random randomGenerator = null)
         {
 
@@ -19,6 +24,11 @@ namespace wpfChallenge.Services
                 BoardGameHelpers.CreateDefaultRules());
         }
 
+        /// <summary>
+        /// Starts the given game and processes turns until there is a Winner
+        /// </summary>
+        /// <param name="game">The game to run</param>
+        /// <returns></returns>
         public LCRGame RunGame(LCRGame game)
         {
             while (!game.IsThereAWinner)
